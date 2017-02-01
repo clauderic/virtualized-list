@@ -1,7 +1,7 @@
 {
   "name": "virtualized-list",
   "version": "1.0.1",
-  "description": "Describe virtualized-list here",
+  "description": "A tiny, dependency free, virtualization library",
   "author": {
     "name": "Clauderic Demers",
     "email": "me@ced.io"
