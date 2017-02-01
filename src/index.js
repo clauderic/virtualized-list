@@ -19,7 +19,7 @@
 const STYLE_INNER = 'position:relative; overflow:hidden; width:100%; min-height:100%;';
 const STYLE_CONTENT = 'position:absolute; top:0; left:0; height:100%; width:100%; overflow:visible;';
 
-class VirtualList {
+export default class VirtualizedList {
   constructor(container, options) {
     this.container = container;
     this.options = options;
@@ -43,7 +43,6 @@ class VirtualList {
 
     // Add event listeners
     this.container.addEventListener('scroll', this.handleScroll);
-
     window.addEventListener('resize', this.resize);
   }
 
