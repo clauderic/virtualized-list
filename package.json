@@ -1,6 +1,6 @@
 {
   "name": "virtualized-list",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Describe virtualized-list here",
   "author": {
     "name": "Clauderic Demers",
@@ -22,8 +22,7 @@
     "test:coverage": "nwb test --coverage",
     "test:watch": "nwb test --server"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "nwb": "0.14.x"
   },
