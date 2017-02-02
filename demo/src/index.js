@@ -23,6 +23,10 @@ const data = Array.from(Array(1000).keys());
       element.innerHTML = row;
 
       return element;
+    },
+    onMount: () => {
+      // We can set the initial index in the onMount callback
+      virtualizedList.scrollToIndex(100);
     }
   });
 })();
