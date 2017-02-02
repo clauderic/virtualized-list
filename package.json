@@ -24,6 +24,8 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.14.1",
     "nwb": "0.14.x"
   },
   "homepage": "",
