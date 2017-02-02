@@ -1,19 +1,21 @@
-/** Virtual list, only renders visible items.
- *  @param {Array<*>} data         List of data items
- *  @param {Function} renderRow    Renders a single row
- *  @param {Number} rowHeight      Static height of a row
- *  @param {Number} overscanCount  Amount of rows to render above and below visible area of the list
+/** Virtualized list, only renders visible items.
+ *  @param  {Array<*>} data           List of data items
+ *  @param  {Function} renderRow      Renders a single row
+ *  @param  {Number}   rowHeight      Static height of a row
+ *  @param  {Number}   overscanCount  Amount of rows to render above and below visible area of the list
+ *  @param  {Function} onMount        Callback that is invoked after the list has mounted
+ *  @method {Function} scrollToIndex  Method used to scroll to any given index
+ *
  *  @example
- *  new VirtualList(element, {
+ *  new VirtualizedList(element, {
  *    data: ['a', 'b', 'c'],
  *    renderRow: (row) => { <div>{row}</div> },
- *    rowHeight: 150
+ *    rowHeight: 150,
+ *    overscanCount: 5
  *  )}
  *
  *  TODO:
  *  – Add support for variable heights
- *  – Add a scroll to index method
- *  – Add an initial scroll offset or index option
  */
 
 const STYLE_INNER = 'position:relative; overflow:hidden; width:100%; min-height:100%;';
@@ -27,44 +29,69 @@ export default class VirtualizedList {
     // Initialization
     this.state = {};
 
-    let inner = this.inner = document.createElement('div');
-    let content = this.content = document.createElement('div');
-
-    inner.appendChild(content);
-    container.appendChild(inner);
-
     // Binding
     this.render = this.render.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
     this.resize = this.resize.bind(this);
 
+    // Lifecycle Methods
+    this.componentWillMount();
+    this.componentDidMount();
+  }
+
+  componentWillMount() {
+    let inner = this.inner = document.createElement('div');
+    let content = this.content = document.createElement('div');
+
+    inner.setAttribute('style', STYLE_INNER);
+    content.setAttribute('style', STYLE_CONTENT);
+    inner.appendChild(content);
+    this.container.appendChild(inner);
+  }
+
+  componentDidMount() {
+    const {onMount} = this.options;
+
     // Resize
-    this.resize();
+    this.resize(onMount);
 
     // Add event listeners
     this.container.addEventListener('scroll', this.handleScroll);
     window.addEventListener('resize', this.resize);
   }
 
-  setState(state = {}) {
+  setState(state = {}, callback) {
     this.state = Object.assign(this.state, state);
 
-    window.requestAnimationFrame(this.render);
+    window.requestAnimationFrame(() => {
+      this.render();
+
+      if (typeof callback === 'function') {
+        callback();
+      }
+    });
   }
 
-  resize() {
+  resize(callback) {
     if (this.state.height !== this.container.offsetHeight) {
       this.setState({
         height: this.container.offsetHeight
-      });
+      }, callback);
     }
-  };
+  }
 
   handleScroll() {
     this.setState({
       offset: this.container.scrollTop
     });
-  };
+  }
+
+  scrollToIndex(index) {
+    const {rowHeight} = this.options;
+    const offset = rowHeight * index;
+
+    this.container.scrollTop = offset;
+  }
 
   destroy() {
     window.removeEventListener('resize', this.resize);
@@ -72,9 +99,9 @@ export default class VirtualizedList {
     // TODO: Destroy everything properly, silly
   }
 
-  render() {
-    const {data, rowHeight, renderRow, overscanCount = 3} = this.options;
-    const {offset = 0, height = 0} = this.state;
+  getRowsForOffset(offset) {
+    const {data, overscanCount = 3, rowHeight} = this.options;
+    const {height} = this.state;
 
     // first visible row index
     let start = (offset / rowHeight)|0;
@@ -93,13 +120,23 @@ export default class VirtualizedList {
     const end = start + 1 + visibleRowCount;
 
     // data slice currently in viewport plus overscan items
-    const selection = data.slice(start, end);
+    return {
+      rows: data.slice(start, end),
+      start,
+      end
+    };
+  }
 
+  render() {
+    const {data, rowHeight, renderRow} = this.options;
+    const {offset = 0} = this.state;
+    const {rows, start} = this.getRowsForOffset(offset);
     const fragment = document.createDocumentFragment();
-    selection.forEach(row => fragment.append(renderRow(row)));
 
-    this.inner.setAttribute('style', `${STYLE_INNER} height:${data.length*rowHeight}px;`);
-    this.content.setAttribute('style', `${STYLE_CONTENT} top:${start*rowHeight}px;`);
+    rows.forEach(row => fragment.append(renderRow(row)));
+
+    this.inner.style.height = `${data.length * rowHeight}px`;
+    this.content.style.top = `${start * rowHeight}px`;
 
     this.content.innerHTML = '';
     this.content.appendChild(fragment);
