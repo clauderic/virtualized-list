@@ -9,14 +9,14 @@
  *  @example
  *  new VirtualizedList(element, {
  *    data: ['a', 'b', 'c'],
- *    renderRow: (row) => { <div>{row}</div> },
+ *    renderRow: (row, index) => { <div>{row}</div> },
  *    rowHeight: 150,
  *    overscanCount: 5
  *  )}
  *
- *  TODO:
- *  – Add support for variable heights
  */
+
+import CellSizeAndPositionManager from './CellSizeAndPositionManager';
 
 const STYLE_INNER = 'position:relative; overflow:hidden; width:100%; min-height:100%;';
 const STYLE_CONTENT = 'position:absolute; top:0; left:0; height:100%; width:100%; overflow:visible;';
@@ -28,6 +28,11 @@ export default class VirtualizedList {
 
     // Initialization
     this.state = {};
+    this._rowSizeAndPositionManager = new CellSizeAndPositionManager({
+      cellCount: options.data.length,
+      cellSizeGetter: ({index}) => this.getRowHeight(index),
+      estimatedCellSize: options.estimatedRowHeight || 100
+    });
 
     // Binding
     this.render = this.render.bind(this);
@@ -86,9 +91,20 @@ export default class VirtualizedList {
     });
   }
 
-  scrollToIndex(index) {
+  getRowHeight(index) {
     const {rowHeight} = this.options;
-    const offset = rowHeight * index;
+
+    return (Array.isArray(rowHeight)) ? rowHeight[index] : rowHeight;
+  }
+
+  getRowOffset(index) {
+    const {offset} = this._rowSizeAndPositionManager.getSizeAndPositionOfCell(index);
+
+    return offset;
+  }
+
+  scrollToIndex(index) {
+    const offset = this.getRowOffset(index);
 
     this.container.scrollTop = offset;
   }
@@ -100,43 +116,36 @@ export default class VirtualizedList {
   }
 
   getRowsForOffset(offset) {
-    const {data, overscanCount = 3, rowHeight} = this.options;
+    const {overscanCount = 3} = this.options;
     const {height} = this.state;
+    let {start, stop} = this._rowSizeAndPositionManager.getVisibleCellRange({
+      containerSize: height,
+      offset
+    });
 
-    // first visible row index
-    let start = (offset / rowHeight)|0;
-
-    // actual number of visible rows (without overscan)
-    let visibleRowCount = (height / rowHeight)|0;
-
-    // Overscan: render blocks of rows modulo an overscan row count
-    // This dramatically reduces DOM writes during scrolling
     if (overscanCount) {
       start = Math.max(0, start - (start % overscanCount));
-      visibleRowCount += overscanCount;
+      stop += overscanCount;
     }
 
-    // last visible + overscan row index
-    const end = start + 1 + visibleRowCount;
+    return {start, stop};
+  }
 
-    // data slice currently in viewport plus overscan items
-    return {
-      rows: data.slice(start, end),
-      start,
-      end
-    };
+  getTotalHeight() {
+    return this._rowSizeAndPositionManager.getTotalSize();
   }
 
   render() {
-    const {data, rowHeight, renderRow} = this.options;
+    const {data, renderRow} = this.options;
     const {offset = 0} = this.state;
-    const {rows, start} = this.getRowsForOffset(offset);
+    const {start, stop} = this.getRowsForOffset(offset);
+    const rows = data.slice(start, stop);
     const fragment = document.createDocumentFragment();
 
-    rows.forEach(row => fragment.append(renderRow(row)));
+    rows.forEach((row, index) => fragment.append(renderRow(row, start + index)));
 
-    this.inner.style.height = `${data.length * rowHeight}px`;
-    this.content.style.top = `${start * rowHeight}px`;
+    this.inner.style.height = `${this.getTotalHeight()}px`;
+    this.content.style.top = `${this.getRowOffset(start)}px`;
 
     this.content.innerHTML = '';
     this.content.appendChild(fragment);
