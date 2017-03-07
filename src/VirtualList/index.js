@@ -6,7 +6,7 @@
  *  @param    {Number}   overscanCount     *Optional* Amount of extra rows to render above and below visible area of the list.
  *  @param    {Number}   initialScrollTop  *Optional* The initial scrollTop offset
  *  @param    {Number}   initialIndex      *Optional* The initial index that should be visible
- *  @callback {Function} onRowsRendered    *Optional* Callback invoked with information about the rows that were just rendered
+ *  @callback {Function} onRowsRendered    *Optional* Callback invoked with information about the range of rows just rendered
  *  @callback {Function} onScroll          *Optional* Callback invoked on scroll. `function (scrollTop, event)`
  *  @callback {Function} onMount           *Optional* Callback that is invoked after the list has mounted
  *  @method   {Function} scrollToIndex     Method used to scroll to any given index
@@ -144,17 +144,20 @@ export default class VirtualizedList {
   }
 
   onRowsRendered(renderedRows) {
+    const {onRowsRendered} = this.options;
+
     if (typeof onRowsRendered === 'function') {
-      this.onRowsRendered(renderedRows);
+      onRowsRendered(renderedRows);
     }
   }
 
   destroy() {
+    this.container.removeEventListener('scroll', this.handleScroll);
     this.container.innerHTML = null;
   }
 
   render() {
-    const {onRowsRendered, overscanCount, renderRow} = this.options;
+    const {overscanCount, renderRow} = this.options;
     const {height, offset = 0} = this.state;
     const {start, stop} = this._sizeAndPositionManager.getVisibleRange({
       containerSize: height,

@@ -114,8 +114,7 @@ export function getUnloadedRanges ({
     const firstUnloadedRange = unloadedRanges[0];
 
     while (
-      firstUnloadedRange.stopIndex - firstUnloadedRange.startIndex + 1 <
-        minimumBatchSize &&
+      firstUnloadedRange.stopIndex - firstUnloadedRange.startIndex + 1 < minimumBatchSize &&
       firstUnloadedRange.startIndex > 0
     ) {
       let index = firstUnloadedRange.startIndex - 1;

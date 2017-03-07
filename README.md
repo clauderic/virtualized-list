@@ -1,5 +1,5 @@
 # virtualized-list
-> A tiny vanilla, dependency free, virtualization library
+> A tiny vanilla virtualization library, with DOM diffing
 
 [![npm package][npm-badge]][npm]
 
