@@ -2,6 +2,8 @@
 > A tiny vanilla virtualization library, with DOM diffing
 
 [![npm package][npm-badge]][npm]
+[![Build Status](https://travis-ci.org/clauderic/virtualized-list.svg?branch=master)](https://travis-ci.org/clauderic/virtualized-list)
+[![codecov](https://codecov.io/gh/clauderic/virtualized-list/branch/master/graph/badge.svg)](https://codecov.io/gh/clauderic/virtualized-list)
 
 Installation
 ------------
