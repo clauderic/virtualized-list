@@ -37,6 +37,7 @@ const virtualizedList = new VirtualizedList(element, {
   	return element;
   },
   rowHeight: [150, 120, 100, 80, 50, 35, 200, 500, 50, 300],
+  estimatedRowHeight: 155,
   overscanCount: 5, // Number of rows to render above/below the visible rows.
   onMount: () => {
   	// Once the component has mounted, we set an initial index to scrollTo

@@ -22,6 +22,7 @@ const rowHeights = data.map(getRandomHeight);
   var virtualizedList = new VirtualizedList(container, {
     data,
     rowHeight: rowHeights,
+    estimatedRowHeight: 100,
     renderRow: (row, index) => {
       const element = document.createElement('div');
       element.setAttribute('style', `height: ${rowHeights[index]}px; ${ELEMENT_STYLE}`);
