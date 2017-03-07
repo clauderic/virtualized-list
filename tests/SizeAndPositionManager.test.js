@@ -1,4 +1,4 @@
-import SizeAndPositionManager from '../src/SizeAndPositionManager';
+import SizeAndPositionManager from '../src/VirtualList/SizeAndPositionManager';
 
 describe('SizeAndPositionManager', () => {
   function getItemSizeAndPositionManager(
