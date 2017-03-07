@@ -22,11 +22,13 @@
     "test:coverage": "nwb test --coverage",
     "test:watch": "nwb test --server"
   },
-  "dependencies": {},
+  "dependencies": {
+    "morphdom": "^2.3.1"
+  },
   "devDependencies": {
     "babel-eslint": "^6.1.2",
     "eslint": "^3.14.1",
-    "nwb": "0.14.x"
+    "nwb": "^0.15.6"
   },
   "homepage": "",
   "license": "MIT",
