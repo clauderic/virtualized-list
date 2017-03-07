@@ -18,19 +18,38 @@
     "start": "nwb serve-web-app demo/src/index.js",
     "build": "nwb build-web-module",
     "clean": "nwb clean-module",
-    "test": "nwb test",
-    "test:coverage": "nwb test --coverage",
-    "test:watch": "nwb test --server"
+    "test": "jest --no-cache",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:ci": "jest && codecov"
   },
   "dependencies": {
     "morphdom": "^2.3.1"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.2",
-    "eslint": "^3.14.1",
+    "babel-jest": "^19.0.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-1": "^6.22.0",
+    "eslint": "3.14.1",
+    "jest": "^19.0.2",
     "nwb": "^0.15.6"
   },
-  "homepage": "",
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
+    "transform": {
+      "^.+\\.js$": "./babel-jest.config.js"
+    }
+  },
+  "user": "clauderic",
+  "homepage": "https://github.com/clauderic/virtualized-list",
   "license": "MIT",
-  "repository": ""
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clauderic/virtualized-list.git"
+  },
+  "bugs": {
+    "url": "https://github.com/clauderic/virtualized-list/issues"
+  }
 }
