@@ -1,14 +1,14 @@
 {
     "parser": "babel-eslint",
     "env": {
-        "browser": true,
-        "es6": true
+      "browser": true,
+      "es6": true,
     },
     "parserOptions": {
-        "ecmaFeatures": {
-            "experimentalObjectRestSpread": true
-        },
-        "sourceType": "module"
+      "ecmaFeatures": {
+        "experimentalObjectRestSpread": true
+      },
+      "sourceType": "module"
     },
     "extends": ["eslint:recommended"]
 }
