@@ -1,33 +1,3 @@
-/** Virtualized list, only renders visible items.
- * Options:
- *  @param    {Number}   rowCount          Total number of rows
- *  @param    {Function} renderRow         Renders a single row
- *  @param    {Any}      rowHeight         Static height of a row, one of `Number`, `Array` or `Function`
- *  @param    {Number}   overscanCount     *Optional* Amount of extra rows to render above and below visible area of the list.
- *  @param    {Number}   initialScrollTop  *Optional* The initial scrollTop offset
- *  @param    {Number}   initialIndex      *Optional* The initial index that should be visible
- *  @callback {Function} onRowsRendered    *Optional* Callback invoked with information about the range of rows just rendered
- *  @callback {Function} onScroll          *Optional* Callback invoked on scroll. `function (scrollTop, event)`
- *  @callback {Function} onMount           *Optional* Callback that is invoked after the list has mounted
- *  @method   {Function} scrollToIndex     Method used to scroll to any given index
- *
- *  @example
- *  const data = ['A', 'B', 'C', 'D', ...]
- *
- *  new VirtualizedList(element, {
- *    height: 500,
- *    rowCount: 100,
- *    renderRow: (index) => {
- *      const row = document.createElement('div');
- *      row.innerHTML = data[index];
- *      return row;
- *    },
- *    rowHeight: 150,
- *    overscanCount: 5,
- *    initialIndex: 50
- *  )}
- *
- */
 import morphdom from 'morphdom';
 import SizeAndPositionManager from './SizeAndPositionManager';
 
@@ -167,7 +137,7 @@ export default class VirtualizedList {
     const fragment = document.createDocumentFragment();
 
     for (let index = start; index <= stop; index++) {
-      fragment.append(renderRow(index));
+      fragment.appendChild(renderRow(index));
     }
 
     this.inner.style.height = `${this._sizeAndPositionManager.getTotalSize()}px`;
