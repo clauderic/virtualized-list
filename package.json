@@ -41,7 +41,10 @@
     "collectCoverage": true,
     "transform": {
       "^.+\\.js$": "./babel-jest.config.js"
-    }
+    },
+    "setupFiles": [
+      "./tests/jest-setup.js"
+    ]
   },
   "homepage": "https://github.com/clauderic/virtualized-list",
   "license": "MIT",
