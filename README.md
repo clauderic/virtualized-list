@@ -10,7 +10,7 @@ Installation
 
 Using [npm](https://www.npmjs.com/package/virtualized-list):
 
-	$ npm install virtualized-list --save
+	npm install virtualized-list --save
 
 Usage
 ------------
