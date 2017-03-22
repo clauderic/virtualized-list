@@ -123,7 +123,7 @@ export default class VirtualizedList {
 
   destroy() {
     this.container.removeEventListener('scroll', this.handleScroll);
-    this.container.innerHTML = null;
+    this.container.innerHTML = '';
   }
 
   render() {
