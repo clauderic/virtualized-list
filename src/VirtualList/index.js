@@ -11,11 +11,7 @@ export default class VirtualizedList {
 
     // Initialization
     this.state = {};
-    this._sizeAndPositionManager = new SizeAndPositionManager({
-      itemCount: options.rowCount,
-      itemSizeGetter: this.getRowHeight,
-      estimatedItemSize: options.estimatedRowHeight || 100
-    });
+    this._initializeSizeAndPositionManager(options.rowCount);
 
     // Binding
     this.render = this.render.bind(this);
@@ -54,6 +50,14 @@ export default class VirtualizedList {
       if (typeof onMount === 'function') {
         onMount();
       }
+    });
+  }
+
+  _initializeSizeAndPositionManager(count) {
+    this._sizeAndPositionManager = new SizeAndPositionManager({
+      itemCount: count,
+      itemSizeGetter: this.getRowHeight,
+      estimatedItemSize: this.options.estimatedRowHeight || 100
     });
   }
 
@@ -111,6 +115,11 @@ export default class VirtualizedList {
     });
 
     this.container.scrollTop = offset;
+  }
+
+  setRowCount(count) {
+    this._initializeSizeAndPositionManager(count);
+    this.render();
   }
 
   onRowsRendered(renderedRows) {
