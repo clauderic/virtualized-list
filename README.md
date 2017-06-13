@@ -5,12 +5,28 @@
 [![Build Status](https://travis-ci.org/clauderic/virtualized-list.svg?branch=master)](https://travis-ci.org/clauderic/virtualized-list)
 [![codecov](https://codecov.io/gh/clauderic/virtualized-list/branch/master/graph/badge.svg)](https://codecov.io/gh/clauderic/virtualized-list)
 
-Installation
+Getting Started
 ------------
 
-Using [npm](https://www.npmjs.com/package/virtualized-list):
+Using [npm](https://www.npmjs.com/):
+```
+npm install virtualized-list --save
+```
 
-	npm install virtualized-list --save
+
+ES6, CommonJS, and UMD builds are available with each distribution. For example:
+```js
+import VirtualizedList from 'virtualized-list';
+```
+
+You can also use a global-friendly UMD build:
+```html
+<script src="virtualized-list/umd/virtualized-list.js"></script>
+<script>
+var VirtualizedList = window.VirtualizedList.default;
+...
+</script>
+```
 
 Usage
 ------------
