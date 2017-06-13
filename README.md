@@ -39,7 +39,7 @@ const rowHeights = [150, 120, 100, 80, 50, 35, 200, 500, 50, 300];
 const virtualizedList = new VirtualizedList(container, {
   height: 400,
   rowCount: rows.length,
-  renderRow: (row, index) => {
+  renderRow: (index) => {
   	const element = document.createElement('div');
   	element.innerHTML = row;
 
