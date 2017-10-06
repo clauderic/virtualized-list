@@ -50,7 +50,7 @@ const virtualizedList = new VirtualizedList(container, {
   rowHeight: 150,
 });
 ```
-[Demo](https://jsfiddle.net/dkntu81u/2/)
+[Demo](https://jsfiddle.net/wq3b9k8b/2/)
 
 ### Advanced example
 ```js
