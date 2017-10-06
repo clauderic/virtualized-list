@@ -48,7 +48,7 @@ const virtualizedList = new VirtualizedList(container, {
   	return element;
   },
   rowHeight: 150,
-)};
+});
 ```
 
 ### Advanced example
