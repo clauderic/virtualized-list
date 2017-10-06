@@ -76,7 +76,7 @@ const virtualizedList = new VirtualizedList(container, {
       virtualizedList.scrollToIndex(3)
     , 2000);
   }
-)}
+})
 ```
 
 
