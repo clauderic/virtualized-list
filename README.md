@@ -5,10 +5,6 @@
 [![Build Status](https://travis-ci.org/clauderic/virtualized-list.svg?branch=master)](https://travis-ci.org/clauderic/virtualized-list)
 [![codecov](https://codecov.io/gh/clauderic/virtualized-list/branch/master/graph/badge.svg)](https://codecov.io/gh/clauderic/virtualized-list)
 
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/oN9PDWZz8fQcbh9sxpDEUvD5/clauderic/virtualized-list'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/oN9PDWZz8fQcbh9sxpDEUvD5/clauderic/virtualized-list.svg' />
-</a>
-
 Getting Started
 ------------
 
