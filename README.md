@@ -44,7 +44,7 @@ const virtualizedList = new VirtualizedList(container, {
   	return element;
   },
   rowHeight: 150,
-)};
+});
 ```
 
 ### Advanced example
@@ -71,7 +71,7 @@ const virtualizedList = new VirtualizedList(container, {
       virtualizedList.scrollToIndex(3)
     , 2000);
   }
-)}
+})
 ```
 
 
