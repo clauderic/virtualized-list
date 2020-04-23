@@ -143,6 +143,9 @@ export default class VirtualizedList {
       offset,
       overscanCount,
     });
+
+    if (start == null || stop == null) return
+
     const fragment = document.createDocumentFragment();
 
     for (let index = start; index <= stop; index++) {
