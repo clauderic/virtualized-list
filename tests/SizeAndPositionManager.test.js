@@ -410,6 +410,17 @@ describe('SizeAndPositionManager', () => {
       expect(start).toEqual(95);
       expect(stop).toEqual(99);
     });
+
+    it("should return a visible range of items for the end of the list", () => {
+      const {sizeAndPositionManager} = getItemSizeAndPositionManager();
+      const {start, stop} = sizeAndPositionManager.getVisibleRange({
+        containerSize: 50,
+        offset: 950,
+        overscanCount: 5,
+      });
+      expect(start).toEqual(90);
+      expect(stop).toEqual(99);
+    });
   });
 
   describe('resetItem', () => {
