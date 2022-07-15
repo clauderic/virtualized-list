@@ -1,6 +1,6 @@
 {
   "name": "virtualized-list",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "A tiny, dependency free, virtualization library",
   "author": {
     "name": "Clauderic Demers",
@@ -46,11 +46,11 @@
       "./tests/jest-setup.js"
     ]
   },
-  "homepage": "https://github.com/clauderic/virtualized-list",
+  "homepage": "https://github.com/yn295636/virtualized-list",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/clauderic/virtualized-list.git"
+    "url": "https://github.com/yn295636/virtualized-list.git"
   },
   "bugs": {
     "url": "https://github.com/clauderic/virtualized-list/issues"

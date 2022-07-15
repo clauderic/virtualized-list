@@ -33,6 +33,14 @@ export default class SizeAndPositionManager {
       throw Error(`Requested index ${index} is outside of range 0..${this._itemCount}`);
     }
 
+    if (this._itemCount === 0) {
+      this._lastMeasuredIndex = -1;
+      return {
+        offset: 0,
+        size: 0
+      };
+    }
+
     if (index > this._lastMeasuredIndex) {
       let lastMeasuredSizeAndPosition = this.getSizeAndPositionOfLastMeasuredItem();
       let offset = lastMeasuredSizeAndPosition.offset +
@@ -134,7 +142,7 @@ export default class SizeAndPositionManager {
 
     if (overscanCount) {
       start = Math.max(0, start - overscanCount);
-      stop = Math.min(stop + overscanCount, this._itemCount);
+      stop = Math.min(stop + overscanCount, this._itemCount - 1);
     }
 
     return {
